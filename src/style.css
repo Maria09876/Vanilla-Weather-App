@@ -1,3 +1,6 @@
 .container{
-    background-color: #c193c5;
+    background-image: url("../src/images/cool-background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    
 }
