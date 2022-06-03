@@ -1,6 +1,12 @@
-.container{
-    background-image: url("../src/images/cool-background.png");
+body{
+    background-image: url("../src/images/mountainwhite.jpg");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;    
+}
+.container{
+    background-color: lightcyan;
     
+}
+.currentWeatherImage{
+    text-align: center;
 }

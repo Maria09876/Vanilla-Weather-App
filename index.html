@@ -18,6 +18,13 @@
         <div class="col">
           <h1>Tilburg</h1>
         </div>
+        <div class="col currentWeatherImage">
+          <img
+            src="src/images/47-470904_weather-free-stock-photo-transparent-sunny-weather-clipart.png"
+            alt=""
+            width="40%"
+          />
+        </div>
         <div class="col">
           <h2>°C | °F</h2>
         </div>
@@ -26,17 +33,16 @@
 
       <div class="row">
         <div class="col">
-          <img
-            src="src/images/47-470904_weather-free-stock-photo-transparent-sunny-weather-clipart.png"
-            alt=""
-            width="25%"
-          />
-          <span id="temperature"> 15°C </span>
+          <h3 id="temperature">15°C</h3>
+          <p id="weather-description">Clear sky</p>
         </div>
+        <div class="col"></div>
         <div class="col">
           <ul>
-            <li>10/19° C</li>
-            <li>Feels like 15°C</li>
+            <li>
+              <span id="tempRange"> 1 </span>
+            </li>
+            <li>Feels like <span id="feelsLike"> 15° </span></li>
           </ul>
         </div>
       </div>
