@@ -14,9 +14,25 @@
   </head>
   <body>
     <div class="container">
+      <form id="search-form" class="mb-3">
+        <div class="row">
+          <div class="col-9">
+            <input
+              type="search"
+              placeholder="Type a city..."
+              autocomplete="off"
+              class="form-control"
+              id="city-input"
+            />
+          </div>
+          <div class="col-3">
+            <input type="submit" value="Search" class="btn btn-primary w-100" />
+          </div>
+        </div>
+      </form>
       <div class="row">
         <div class="col">
-          <h1>Tilburg</h1>
+          <h1 id="city">Tilburg</h1>
         </div>
         <div class="col currentWeatherImage">
           <img src="" alt="" id="icon" />

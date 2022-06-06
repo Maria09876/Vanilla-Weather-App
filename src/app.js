@@ -2,7 +2,7 @@ function showTemperature(response) {
     console.log(response.data);
     //data and variables from the top section
     let temperatureElement = document.querySelector("#temperature");
-    let city = document.querySelector("h1");
+    let city = document.querySelector("#city");
     let rangeTemperature = document.querySelector("#tempRange");
     let descriptionElement = document.querySelector("#weather-description");
     let feelsLikeElement = document.querySelector("#feelsLike");
@@ -31,11 +31,31 @@ function showTemperature(response) {
 
 
 
-let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=metric`
+
 
 //api for Uv index
 //let apiKeyUV = "64b8c55c2ce6dc6c14c598f6d9595ce3";
 //let apiUrlUV="https://api.openuv.io/api/v1/uv"
 
+
+    
+//for the search engine
+function search(city) {
+    let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`  
     axios.get(apiUrl).then(showTemperature);
+}
+
+
+let from = document.querySelector("#search-form");
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityInput = document.querySelector("#city-input");
+    search(cityInput.value);
+}
+
+
+
+
+from.addEventListener("submit", handleSubmit);
