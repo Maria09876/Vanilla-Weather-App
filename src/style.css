@@ -4,7 +4,7 @@ body{
     background-repeat: no-repeat;    
 }
 .container{
-    background-color: lightcyan;
+    background-color: rgb(117, 153, 153);
     
 }
 .currentWeatherImage{
