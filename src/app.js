@@ -1,5 +1,11 @@
-function presentCurrentTime(timestamp) {
-    let now = new Date;
+function presentCurrentTime(timezone) {
+
+    let now = new Date(); // Create a new (local) date object
+    let time = now.getTime() + (timezone * 1000); // Get the UTC time from the (local) date object 
+    // which is more accurate than from the API and we add the timezone seconds (first multiply to create milliseconds)
+    let timeCalculated = new Date(time); // Now we create a new date object using the milliseconds 
+    // from UTC + timezone (so the time of the target location)
+
     let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     let month = ["January",
         "February",
@@ -14,11 +20,11 @@ function presentCurrentTime(timestamp) {
         "November",
         "December"];
     
-    let day = days[now.getDay()];
-    let currentDate = now.getDate();
-    let currentMonth = month[now.getMonth()];
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
+    let day = days[timeCalculated.getUTCDay()];
+    let currentDate = timeCalculated.getUTCDate();
+    let currentMonth = month[timeCalculated.getUTCMonth()];
+    let hours = timeCalculated.getUTCHours();
+    let minutes = timeCalculated.getUTCMinutes();
 
     if (hours < 10) {
         hours = `0${hours}`;
@@ -33,8 +39,8 @@ function presentCurrentTime(timestamp) {
     
 function showTemperature(response) {
     console.log(response.data);
-    //data and variables from the top section
-    let dateElement=document.querySelector("h4")
+    //Target top section
+    let dateElement = document.querySelector("h4")
     let temperatureElement = document.querySelector("#temperature");
     let city = document.querySelector("#city");
     let rangeTemperature = document.querySelector("#tempRange");
@@ -43,8 +49,7 @@ function showTemperature(response) {
     let iconElement = document.querySelector("#icon");
 
     celciusTemp = response.data.main.temp;
-
-    dateElement.innerHTML = presentCurrentTime(response.data.dt);
+    dateElement.innerHTML = presentCurrentTime(response.data.timezone);
     temperatureElement.innerHTML = `${Math.round(celciusTemp)}°C`;
     city.innerHTML = response.data.name;
     rangeTemperature.innerHTML = `${Math.round(response.data.main.temp_min)}° / ${Math.round(response.data.main.temp_max)}°C`;
@@ -53,19 +58,50 @@ function showTemperature(response) {
     iconElement.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
 
-    //data and variables for the middle section
-    let windElement = document.querySelector("#windSpeed");
-    let humidityElement = document.querySelector("#humidity");
+    //Target middle section
+    let windElement = document.querySelector("#windSpeed"); //Wind speed
+    let humidityElement = document.querySelector("#humidity"); //Humidity
+    let windForce = document.querySelector("#wind-force-description"); //Wind description
 
 
-    //let kilometers = convertWindSpeed(response.data.wind.speed);
-    windElement.innerHTML = `${Math.round(response.data.wind.speed * 3.6)} km / h`;
+    //Convert Wind Speed and Indicate Wind Force
+    let windSpeedKmh = Math.round(response.data.wind.speed * 3.6);
+    windElement.innerHTML = `${windSpeedKmh} km/h`;
     humidityElement.innerHTML = `${response.data.main.humidity} %`;
+
+    if (windSpeedKmh > 0 && windSpeedKmh <= 5) {
+        windForce.innerHTML = "Light Air";
+    } else if (windSpeedKmh > 5   && windSpeedKmh <= 11) {
+        windForce.innerHTML = "Light Breeze";
+    } else if (windSpeedKmh > 11  && windSpeedKmh <= 19) {
+        windForce.innerHTML = "Gentle Breeze";
+    } else if (windSpeedKmh > 19  && windSpeedKmh <= 28) {
+        windForce.innerHTML = "Moderate Breeze";
+    } else if (windSpeedKmh > 28  && windSpeedKmh <= 37) {
+        windForce.innerHTML = "Fresh Breeze";
+    } else if (windSpeedKmh > 37  && windSpeedKmh <= 49) {
+        windForce.innerHTML = "Strong Breeze";
+    } else if (windSpeedKmh > 49  && windSpeedKmh <= 61) {
+        windForce.innerHTML = "Near Gale";
+    } else if (windSpeedKmh > 61  && windSpeedKmh <= 74) {
+        windForce.innerHTML = "Gale";
+    } else if (windSpeedKmh > 74  && windSpeedKmh <= 88) {
+        windForce.innerHTML = "Strong Gale";
+    } else if (windSpeedKmh > 88  && windSpeedKmh <= 102) {
+        windForce.innerHTML = "Storm";
+    } else if (windSpeedKmh > 102 && windSpeedKmh <= 117) {
+        windForce.innerHTML = "Violent Storm";
+    } else if (windSpeedKmh > 117) {
+        windForce.innerHTML = "Hurricane";
+    }
+
+
+
 }
 
-//function convertWindSpeed(km) {
-    //return Math.round(response.data.wind.speed * 3.6);
-//}
+
+
+
 //api for Uv index
 //let apiKeyUV = "64b8c55c2ce6dc6c14c598f6d9595ce3";
 //let apiUrlUV="https://api.openuv.io/api/v1/uv"
