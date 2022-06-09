@@ -94,9 +94,6 @@ function showTemperature(response) {
     } else if (windSpeedKmh > 117) {
         windForce.innerHTML = "Hurricane";
     }
-
-
-
 }
 
 

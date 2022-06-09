@@ -22,3 +22,17 @@ h2 .active{
 #weather-description::first-letter{
     text-transform: capitalize;
 }
+.weather-forecast{
+    text-align: center;
+    margin-top: 0 ;
+}
+.weather-forecast-day{
+text-decoration: underline;
+
+}
+.weather-forecast-description{
+  border: 2px solid rgb(82, 96, 105);  
+  border-radius: 8px ;
+  margin-bottom: 10%;
+  box-shadow: 1.5px 2.5px 1.5px 1px;
+}
