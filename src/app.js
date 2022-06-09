@@ -35,7 +35,40 @@ function presentCurrentTime(timezone) {
     return `${day}, ${currentDate} ${currentMonth}, ${hours}:${minutes}`;
 
 } 
+
+function showForecast() {
+    let forecastElement = document.querySelector("#forecast");
+    let forecastHTML = `<div class="row">`; //Indicating to JS that we will build a grid
+    let days = [ "THU", "FRI", "SAT", "SUN"]; 
+
+    //each day will be processed through a function-which expects a day-in a loop
+    //populating the variable with the content of itself and the block of code from HTML
+    days.forEach(function (day) {
+        forecastHTML = forecastHTML + `                  
+          <div class="col-2">
+            <div class="weather-forecast-description">
+              <div class="weather-forecast-date">${day}</div>
+              <div class="weather-forecast-temperature">
+                <span class="weather-forecast-temperature-max"> 22° / </span>
+                <span class="weather-forecast-temperature-min"> 11° </span>
+              </div>
+              <img
+                src="https://openweathermap.org/img/wn/02d@2x.png"
+                alt="weather picture"
+                width="40%"
+              />
+            </div>
+          </div>`;
+    });
     
+    forecastHTML = forecastHTML+`</div>`; //closing the div the same way it started
+    forecastElement.innerHTML = forecastHTML    
+
+}
+
+showForecast();
+
+
     
 function showTemperature(response) {
     console.log(response.data);
@@ -47,6 +80,7 @@ function showTemperature(response) {
     let descriptionElement = document.querySelector("#weather-description");
     let feelsLikeElement = document.querySelector("#feelsLike");
     let iconElement = document.querySelector("#icon");
+
 
     celciusTemp = response.data.main.temp;
     dateElement.innerHTML = presentCurrentTime(response.data.timezone);
