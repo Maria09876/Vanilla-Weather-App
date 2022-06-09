@@ -36,7 +36,15 @@ function presentCurrentTime(timezone) {
 
 } 
 
-function showForecast() {
+function getForecastCoords(coordinates) {
+    
+    let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
+    let apiUrl=`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&&appid=${apiKey}&units=metric`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(showForecast);
+}
+
+function showForecast(response) {
     let forecastElement = document.querySelector("#forecast");
     let forecastHTML = `<div class="row">`; //Indicating to JS that we will build a grid
     let days = [ "THU", "FRI", "SAT", "SUN"]; 
@@ -63,13 +71,9 @@ function showForecast() {
     
     forecastHTML = forecastHTML+`</div>`; //closing the div the same way it started
     forecastElement.innerHTML = forecastHTML    
-
+    console.log(response.data.daily);
 }
-
-showForecast();
-
-
-    
+  
 function showTemperature(response) {
     console.log(response.data);
     //Target top section
@@ -91,6 +95,8 @@ function showTemperature(response) {
     feelsLikeElement.innerHTML = `${Math.round(response.data.main.feels_like)}°C`;
     iconElement.setAttribute("src", `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
+
+    getForecastCoords(response.data.coord);
 
     //Target middle section
     let windElement = document.querySelector("#windSpeed"); //Wind speed
@@ -128,6 +134,8 @@ function showTemperature(response) {
     } else if (windSpeedKmh > 117) {
         windForce.innerHTML = "Hurricane";
     }
+
+
 }
 
 
