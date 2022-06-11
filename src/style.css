@@ -37,11 +37,8 @@ text-decoration: underline;
 
 }
 .weather-forecast-description{
-/* From https://css.glass */
-    background: rgba(253, 223, 223, 0.53);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10.4px);
-    -webkit-backdrop-filter: blur(10.4px);
-    margin-bottom: 10%;
+border-radius: 53px;
+    background: linear-gradient(145deg, #a1c4e6, #c0e9ff);
+    box-shadow: 10px 10px 35px #a5c9eb,
+        -10px -10px 35px #c1ebff;
 }
