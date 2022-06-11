@@ -49,16 +49,24 @@
 
       <div class="row">
         <div class="col">
-          <h3 id="temperature">15°C</h3>
+          <div class="currentTemp">
+            <h3 id="temperature" class="temps">15</h3>
+          </div>
+          <div class="rowFix"><h3 class="denominator">°C</h3></div>
+
           <p id="weather-description">Clear sky</p>
         </div>
         <div class="col"></div>
         <div class="col">
           <ul>
             <li>
-              <span id="tempRange"> 1 </span>
+              <span id="maximum">1</span> /</span>
+              <span id="minimum">0</span><span class="denominator">°C</span>
             </li>
-            <li>Feels like <span id="feelsLike"> 15° </span></li>
+            <li>
+              Feels like <span id="feelsLike" class="temps"> 15 </span>
+              <span class="denominator">°C</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -74,37 +82,11 @@
           <span id="humidity"> 36% </span>
         </div>
         <div class="col">
-          Percipication <br />
-          <span id="percipication"> 5% </span>
+          UV Level <br />
+          <span>11%</span>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h6>UV</h6>
-              <img
-                src="src/images/47-470904_weather-free-stock-photo-transparent-sunny-weather-clipart.png"
-                alt=""
-                width="20%"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h6>Air Quality</h6>
-              <img
-                src="src/images/47-470904_weather-free-stock-photo-transparent-sunny-weather-clipart.png"
-                alt=""
-                width="20%"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
       <br />
       <div class="weather-forecast" id="forecast"></div>
     </div>

@@ -13,6 +13,12 @@ body{
 li{
     list-style: none;
 }
+#icon{
+    width: 30%;
+}
+.currentTemp, .rowFix{
+    display: inline-block;
+}
 
 h2 .active{
     color: black;
