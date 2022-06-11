@@ -1,4 +1,14 @@
-function presentCurrentTime(timezone) {
+let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+let from = document.querySelector("#search-form");
+from.addEventListener("submit", handleSubmit);
+
+//temperature conversion
+let celciusTemp = null;
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+let celciusLink = document.querySelector("#celcius-link");
+fahrenheitLink.addEventListener("click", displayFTemp);
+celciusLink.addEventListener("click", displayCTemp);
+
 
     let now = new Date(); // Create a new (local) date object
     let time = now.getTime() + (timezone * 1000); // Get the UTC time from the (local) date object 
@@ -6,7 +16,7 @@ function presentCurrentTime(timezone) {
     let timeCalculated = new Date(time); // Now we create a new date object using the milliseconds 
     // from UTC + timezone (so the time of the target location)
 
-    let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+   
     let month = ["January",
         "February",
         "March",
@@ -36,44 +46,55 @@ function presentCurrentTime(timezone) {
 
 } 
 
+//Gets dt timestamp
+//Returns the day
+function getForecastDay(timestamp) {
+    let dayCalculated = new Date(timestamp * 1000);
+    let forecastDay = dayCalculated.getUTCDay();
+    return days[forecastDay];
+}
+
+//Gets coordinates and calls a newly created API, then calls showForecast
 function getForecastCoords(coordinates) {
-    
     let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
     let apiUrl=`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&&appid=${apiKey}&units=metric`;
-    console.log(apiUrl);
     axios.get(apiUrl).then(showForecast);
 }
 
+//Gets the response from the API and displays a forecast in a row
 function showForecast(response) {
     let forecastElement = document.querySelector("#forecast");
     let forecastHTML = `<div class="row">`; //Indicating to JS that we will build a grid
-    let days = [ "THU", "FRI", "SAT", "SUN"]; 
-
-    //each day will be processed through a function-which expects a day-in a loop
-    //populating the variable with the content of itself and the block of code from HTML
-    days.forEach(function (day) {
-        forecastHTML = forecastHTML + `                  
+    let forecast = response.data.daily; 
+    
+        //each day will be processed through a function-which expects a day-in a loop
+        //populating the variable with the content of itself and the block of code from HTML
+    forecast.forEach(function (forecastDay, index) {
+        if (index < 6) {
+        forecastHTML = forecastHTML + `              
           <div class="col-2">
             <div class="weather-forecast-description">
-              <div class="weather-forecast-date">${day}</div>
+              <div class="weather-forecast-date">${getForecastDay(forecastDay.dt)}</div>
               <div class="weather-forecast-temperature">
-                <span class="weather-forecast-temperature-max"> 22° / </span>
-                <span class="weather-forecast-temperature-min"> 11° </span>
+                <span class="weather-forecast-temperature-max"> ${Math.round(forecastDay.temp.max)}° / </span>
+                <span class="weather-forecast-temperature-min"> ${Math.round(forecastDay.temp.min)}° </span>
               </div>
               <img
-                src="https://openweathermap.org/img/wn/02d@2x.png"
+                src="https://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png" 
                 alt="weather picture"
                 width="40%"
               />
             </div>
           </div>`;
-    });
-    
+    }
+} );
     forecastHTML = forecastHTML+`</div>`; //closing the div the same way it started
-    forecastElement.innerHTML = forecastHTML    
-    console.log(response.data.daily);
+    forecastElement.innerHTML = forecastHTML 
+    
+    
 }
-  
+
+//targets elements and displays data from the API response
 function showTemperature(response) {
     console.log(response.data);
     //Target top section
@@ -137,40 +158,22 @@ function showTemperature(response) {
 
 
 }
-
-
-
-
-//api for Uv index
-//let apiKeyUV = "64b8c55c2ce6dc6c14c598f6d9595ce3";
-//let apiUrlUV="https://api.openuv.io/api/v1/uv"
-
-
     
-//for the search engine
+//Uses the city name to call API and get data, then sends the data to function showTemp
 function search(city) {
     let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`  
     axios.get(apiUrl).then(showTemperature);
 }
 
-let from = document.querySelector("#search-form");
-
+//Activates when a request for a city has been made and gives the city name to the function search
 function handleSubmit(event) {
     event.preventDefault();
     let cityInput = document.querySelector("#city-input");
     search(cityInput.value);
 }
-from.addEventListener("submit", handleSubmit);
 
-
-//temperature conversion
-let celciusTemp = null;
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-let celciusLink = document.querySelector("#celcius-link");
-fahrenheitLink.addEventListener("click", displayFTemp);
-celciusLink.addEventListener("click", displayCTemp);
-
+//Activates when the request for F conversion has been made, calculates and displays Fahrenheit temp
 function displayFTemp(event) {
     event.preventDefault();
     let temperatureElement = document.querySelector("#temperature");
@@ -180,6 +183,7 @@ function displayFTemp(event) {
     temperatureElement.innerHTML = `${Math.round(fahrenheitTemp)}°F`;
 }
 
+//Activates when the request for C conversion has been made, calculates and displays Celcius temp
 function displayCTemp(event) {
     event.preventDefault();
     let temperatureElement = document.querySelector("#temperature");
@@ -188,3 +192,6 @@ function displayCTemp(event) {
     temperatureElement.innerHTML = `${Math.round(celciusTemp)}°C`;
 
 }
+
+
+
