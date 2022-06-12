@@ -15,8 +15,6 @@ body{
         -webkit-backdrop-filter: blur(7.1px);
 }
 
-
-
 #searchBar, #searchButton{
     margin-top: 2%;
 }
@@ -58,4 +56,18 @@ text-decoration: underline;
     -webkit-backdrop-filter: blur(5.7px);
         
     margin-bottom: 9%;
+}
+
+small{
+    color: white;
+    text-align: center;
+    display: block;
+    margin: 0 7% 0 7%;
+    padding: 0.5%;
+    /* From https://css.glass */
+        background: rgba(253, 222, 222, 0.67);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(7.1px);
+        -webkit-backdrop-filter: blur(7.1px);
 }
