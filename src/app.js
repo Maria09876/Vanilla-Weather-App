@@ -64,7 +64,9 @@ function getForecastDay(timestamp) {
 function getForecastCoords(coordinates) {
     let apiKey = "f3b72f65f46b84b8e79b5ce613a7a232";
     let apiUrl=`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(showForecast);
+    axios.get(apiUrl)
+        .then((response) => { showForecast(response); return response })
+        .then((response) => { setUVindex(response.data.current.uvi) })
 }
 
 //Gets the response from the API and displays a forecast in a row
@@ -96,13 +98,10 @@ function showForecast(response) {
 } );
     forecastHTML = forecastHTML+`</div>`; //closing the div the same way it started
     forecastElement.innerHTML = forecastHTML 
-    
-    
 }
 
 //targets elements and displays data from the API response
 function showTemperature(response) {
-    console.log(response.data);
     //Target top section
     let dateElement = document.querySelector("h4")
     let temperatureElement = document.querySelector("#temperature");
@@ -132,7 +131,6 @@ function showTemperature(response) {
     let windElement = document.querySelector("#windSpeed"); //Wind speed
     let humidityElement = document.querySelector("#humidity"); //Humidity
     let windForce = document.querySelector("#wind-force-description"); //Wind description
-
 
     //Convert Wind Speed and Indicate Wind Force
     let windSpeedKmh = Math.round(response.data.wind.speed * 3.6);
@@ -224,4 +222,20 @@ function displayCTemp(event) {
     celciusLink.removeEventListener("click", displayCTemp)
 }
 
-
+//Gets UV Index from API data from function getForecastCoords
+function setUVindex(uvIndex) {
+    let uvElement = document.querySelector("#uvIndex");
+    let uvLevel = document.querySelector("#uv-description");
+    uvElement.innerHTML = Math.round(uvIndex);
+    if (uvIndex > 0 && uvIndex <= 2) {
+        uvLevel.innerHTML = "Low";
+    } else if (uvIndex > 2 && uvIndex <= 5) {
+            uvLevel.innerHTML = "Moderate";
+        } else if (uvIndex > 5 && uvIndex <= 7) {
+            uvLevel.innerHTML = "Gentle Breeze";
+        } else if (uvIndex > 7 && uvIndex <= 10) {
+            uvLevel.innerHTML = "Moderate Breeze";
+        } else if (uvIndex > 10) {
+            uvLevel.innerHTML = "Fresh Breeze";
+        }
+    }
