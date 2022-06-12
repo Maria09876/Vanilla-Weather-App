@@ -1,12 +1,25 @@
 body{
-    background-image: url("../src/images/mountainwhite.jpg");
+    background-image: url("../src/images/sunsetWave.jpg");
     background-size: cover;
     background-repeat: no-repeat;    
 }
 .container{
-    background-color: rgba(209, 211, 220, 0.9); 
+    font-family: 'Raleway',sans-serif;
+    font-weight: 300;
+    margin-top: 6%;
+    /* From https://css.glass */
+        background: rgba(253, 222, 222, 0.67);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(7.1px);
+        -webkit-backdrop-filter: blur(7.1px);
 }
 
+
+
+#searchBar, #searchButton{
+    margin-top: 2%;
+}
 .currentWeatherImage{
     text-align: center;
 }
@@ -37,8 +50,12 @@ text-decoration: underline;
 
 }
 .weather-forecast-description{
-border-radius: 53px;
-    background: linear-gradient(145deg, #a1c4e6, #c0e9ff);
-    box-shadow: 10px 10px 35px #a5c9eb,
-        -10px -10px 35px #c1ebff;
+/* From https://css.glass */
+    background: rgba(225, 167, 122, 0.58);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.7px);
+    -webkit-backdrop-filter: blur(5.7px);
+        
+    margin-bottom: 9%;
 }
