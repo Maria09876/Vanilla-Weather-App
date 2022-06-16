@@ -232,10 +232,10 @@ function setUVindex(uvIndex) {
     } else if (uvIndex > 2 && uvIndex <= 5) {
             uvLevel.innerHTML = "Moderate";
         } else if (uvIndex > 5 && uvIndex <= 7) {
-            uvLevel.innerHTML = "Gentle Breeze";
+            uvLevel.innerHTML = "High";
         } else if (uvIndex > 7 && uvIndex <= 10) {
-            uvLevel.innerHTML = "Moderate Breeze";
+            uvLevel.innerHTML = "Very High";
         } else if (uvIndex > 10) {
-            uvLevel.innerHTML = "Fresh Breeze";
+            uvLevel.innerHTML = "Extreme";
         }
     }
